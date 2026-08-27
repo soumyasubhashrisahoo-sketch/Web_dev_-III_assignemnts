@@ -1,33 +1,24 @@
-const http = require('http');
-const logger = require('./modules/logger');
-
-const PORT = 3000;
-
-const routes = {
-    '/': 'Welcome to Node Server',
-    '/about': 'About Page',
-    '/contact': 'Contact Page',
-};
+const http = require("http");
 
 const server = http.createServer((req, res) => {
-    logger.log(`Incoming request: ${req.method} ${req.url}`);
+    console.log(req.method, req.url);
 
-    const body = routes[req.url];
-
-    if (body) {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end(body);
+    if (req.url === "/") {
+        res.write("Welcome to Node Server");
+        res.end();
+    } else if (req.url === "/about") {
+        res.write("About Page");
+        res.end();
+    } else if (req.url === "/contact") {
+        res.write("Contact Page");
+        res.end();
     } else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('404 - Page Not Found');
+        res.writeHead(404);
+        res.write("404 Page Not Found");
+        res.end();
     }
 });
 
-server.listen(PORT, () => {
-    logger.log(`Server running at http://localhost:${PORT}/`);
-    console.log('Try these routes:');
-    console.log(`  http://localhost:${PORT}/`);
-    console.log(`  http://localhost:${PORT}/about`);
-    console.log(`  http://localhost:${PORT}/contact`);
-    console.log(`  http://localhost:${PORT}/anything-else  (404)`);
+server.listen(3000, () => {
+    console.log("Server is running on PORT 3000");
 });

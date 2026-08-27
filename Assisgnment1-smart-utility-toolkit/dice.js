@@ -1,18 +1,11 @@
-const crypto = require('crypto');
-const logger = require('./modules/logger');
+const crypto = require("crypto");
 
 function rollDice() {
     return crypto.randomInt(1, 7);
 }
 
-function simulateRolls(count) {
-    console.log(`Rolling dice ${count} time(s)...\n`);
-    for (let i = 1; i <= count; i++) {
-        const value = rollDice();
-        console.log(`Roll ${i}: Dice Rolled: ${value}`);
-        logger.log(`Roll ${i} result: ${value}`);
-    }
-}
+let rolls = Number(process.argv[2]) || 1;
 
-const rolls = Number(process.argv[2]) || 1;
-simulateRolls(rolls);
+for (let i = 1; i <= rolls; i++) {
+    console.log("Dice Rolled:", rollDice());
+}

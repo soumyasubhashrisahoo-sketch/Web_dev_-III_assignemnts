@@ -1,9 +1,9 @@
-function isEven(number) {
-    const n = Number(number);
-    if (Number.isNaN(n)) {
-        throw new Error('isEven() requires a valid number.');
+function isEven(num) {
+    if (num % 2 === 0) {
+        return true;
+    } else {
+        return false;
     }
-    return n % 2 === 0;
 }
 
 module.exports = isEven;
