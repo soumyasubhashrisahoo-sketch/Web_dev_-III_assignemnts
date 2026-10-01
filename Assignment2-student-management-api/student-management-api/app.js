@@ -5,13 +5,13 @@ const studentRoutes = require("./routes/studentRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware to parse incoming JSON requests
+
 app.use(express.json());
 
-// Custom logger middleware (logs method, URL, timestamp)
+
 app.use(logger);
 
-// Root route (simple health check)
+
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Student Management REST API is running.",
@@ -25,10 +25,10 @@ app.get("/", (req, res) => {
   });
 });
 
-// Modular routing for student-related APIs
+
 app.use("/students", studentRoutes);
 
-// 404 handler for undefined routes
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -36,7 +36,7 @@ app.use((req, res) => {
   });
 });
 
-// Global error handling middleware
+
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({
