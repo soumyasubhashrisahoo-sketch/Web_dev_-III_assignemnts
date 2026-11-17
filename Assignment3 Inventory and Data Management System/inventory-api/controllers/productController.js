@@ -7,6 +7,11 @@ const escapeRegex = (str) => String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 // POST /api/products
 exports.createProduct = asyncHandler(async (req, res) => {
+  // Accepts a single object or an array of objects
+  if (Array.isArray(req.body)) {
+    const products = await Product.insertMany(req.body);
+    return res.status(201).json({ message: `${products.length} products created`, products });
+  }
   const product = await Product.create(req.body);
   res.status(201).json(product);
 });
