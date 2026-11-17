@@ -34,7 +34,8 @@ const errorHandler = (err, req, res, next) => {
     message = `Invalid value for ${err.path}`;
   } else if (err.code === 11000) {
     status = 409;
-    message = `Duplicate value for: ${Object.keys(err.keyValue).join(', ')}`;
+    const fields = err.keyValue ? Object.keys(err.keyValue) : ['sku'];
+    message = `Duplicate value for: ${fields.join(', ')}`;
   } else if (err instanceof SyntaxError && err.status === 400) {
     message = 'Malformed JSON body';
   }
