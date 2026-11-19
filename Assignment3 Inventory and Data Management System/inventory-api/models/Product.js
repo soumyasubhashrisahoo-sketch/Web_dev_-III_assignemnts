@@ -53,7 +53,6 @@ const productSchema = new mongoose.Schema(
   }
 );
 
-// Virtual field: total value of stock on hand
 productSchema.virtual('stockValue').get(function () {
   return this.price * this.quantity;
 });
