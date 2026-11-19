@@ -5,7 +5,6 @@ const asyncHandler = (fn) => (req, res, next) => Promise.resolve(fn(req, res, ne
 
 const escapeRegex = (str) => String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-// POST /api/products
 exports.createProduct = asyncHandler(async (req, res) => {
   // Accepts a single object or an array of objects
   if (Array.isArray(req.body)) {
