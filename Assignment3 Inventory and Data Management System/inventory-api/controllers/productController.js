@@ -6,7 +6,7 @@ const asyncHandler = (fn) => (req, res, next) => Promise.resolve(fn(req, res, ne
 const escapeRegex = (str) => String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 exports.createProduct = asyncHandler(async (req, res) => {
-  // Accepts a single object or an array of objects
+  
   if (Array.isArray(req.body)) {
     const products = await Product.insertMany(req.body);
     return res.status(201).json({ message: `${products.length} products created`, products });
@@ -15,7 +15,7 @@ exports.createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(product);
 });
 
-// GET /api/products?category=&supplier=&search=&minPrice=&maxPrice=&sort=&page=&limit=
+
 exports.getProducts = asyncHandler(async (req, res) => {
   const { category, supplier, search, minPrice, maxPrice, sort, page = 1, limit = 10 } = req.query;
 
