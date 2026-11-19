@@ -29,7 +29,7 @@ exports.getProducts = asyncHandler(async (req, res) => {
     if (maxPrice) filter.price.$lte = Number(maxPrice);
   }
 
-  // sort=price,-quantity  ->  { price: 1, quantity: -1 }
+ 
   const allowedSort = ['name', 'price', 'quantity', 'category', 'createdAt'];
   const sortBy = {};
   (sort ? sort.split(',') : ['-createdAt']).forEach((field) => {
@@ -58,14 +58,13 @@ exports.getProducts = asyncHandler(async (req, res) => {
   });
 });
 
-// GET /api/products/:id
 exports.getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
   if (!product) throw new AppError('Product not found', 404);
   res.json(product);
 });
 
-// PUT /api/products/:id  (update product details)
+
 exports.updateProduct = asyncHandler(async (req, res) => {
   const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -75,15 +74,14 @@ exports.updateProduct = asyncHandler(async (req, res) => {
   res.json({ message: 'Product updated', product });
 });
 
-// PATCH /api/products/:id/stock   body: { "change": 10 } or { "change": -3 }
+
 exports.adjustStock = asyncHandler(async (req, res) => {
   const change = Number(req.body.change);
   if (!Number.isInteger(change) || change === 0) {
     throw new AppError('"change" must be a non-zero integer (positive = restock, negative = sale)', 400);
   }
 
-  // Atomic update: the filter guarantees stock can never go below zero,
-  // even with concurrent requests
+  
   const filter = { _id: req.params.id };
   if (change < 0) filter.quantity = { $gte: -change };
 
