@@ -83,7 +83,7 @@ exports.adjustStock = asyncHandler(async (req, res) => {
   }
 
   // Atomic update: the filter guarantees stock can never go below zero,
-  // even with concurrent requests.
+  // even with concurrent requests
   const filter = { _id: req.params.id };
   if (change < 0) filter.quantity = { $gte: -change };
 
@@ -102,14 +102,13 @@ exports.adjustStock = asyncHandler(async (req, res) => {
   res.json({ message: 'Stock updated', product });
 });
 
-// DELETE /api/products/:id
 exports.deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findByIdAndDelete(req.params.id);
   if (!product) throw new AppError('Product not found', 404);
   res.json({ message: 'Product deleted', id: product.id });
 });
 
-// GET /api/products/low-stock  (quantity <= reorderLevel)
+
 exports.getLowStock = asyncHandler(async (req, res) => {
   const lowStockItems = await Product.find({
     $expr: { $lte: ['$quantity', '$reorderLevel'] },
@@ -118,7 +117,7 @@ exports.getLowStock = asyncHandler(async (req, res) => {
   res.json({ count: lowStockItems.length, lowStockItems });
 });
 
-// GET /api/products/summary  (category-wise aggregation)
+
 exports.getCategorySummary = asyncHandler(async (req, res) => {
   const summary = await Product.aggregate([
     {
