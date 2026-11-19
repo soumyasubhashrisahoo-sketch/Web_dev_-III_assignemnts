@@ -7,7 +7,6 @@ class AppError extends Error {
   }
 }
 
-// Rejects malformed ids before they hit the database
 const validateObjectId = (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return next(new AppError('Invalid product id', 400));
@@ -19,7 +18,7 @@ const notFound = (req, res, next) => {
   next(new AppError(`Route not found: ${req.method} ${req.originalUrl}`, 404));
 };
 
-// Centralized error handler
+
 const errorHandler = (err, req, res, next) => {
   let status = err.statusCode || 500;
   let message = err.message || 'Server error';
