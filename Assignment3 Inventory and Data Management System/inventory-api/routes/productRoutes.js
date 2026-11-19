@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.route('/').get(c.getProducts).post(c.createProduct);
 
-// Static routes MUST come before '/:id' or "low-stock" is treated as an id
+
 router.get('/low-stock', c.getLowStock);
 router.get('/summary', c.getCategorySummary);
 
